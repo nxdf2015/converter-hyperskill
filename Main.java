@@ -102,14 +102,7 @@ public class Main {
         return result;
     }
 
-    private static String getSymbol(int digit) {
-        if (digit < 10){
-            return ""+digit;
-        }
-        else {
-            return  ""+Character.toChars(digit + 'a' -10)[0];
-        }
-    }
+
 
     private static double convertToDecimal(String s, double radixsource) throws Exception {
         double r = 0;
@@ -142,5 +135,13 @@ public class Main {
         }
     }
 
+    private static String getSymbol(int digit) {
+        if (digit < 10){
+            return ""+digit;
+        }
+        else {
+            return  ""+Character.toChars(digit + 'a' -10)[0];
+        }
+    }
 
 }
