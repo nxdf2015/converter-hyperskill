@@ -51,40 +51,53 @@ public class Main {
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
-
+        try {
         int radixsource = scanner.nextInt();
         String v = scanner.next();
         int radixtarget = scanner.nextInt();
+        if (radixsource <1 || radixtarget <1 || radixsource>36 || radixtarget>36){
+            throw new Exception();
+        }
         String r;
-        if (v.indexOf('.') == -1 ){
-            r = convert(v,radixsource,radixtarget);
+
+            if (v.indexOf('.') == -1) {
+                r = convert(v, radixsource, radixtarget);
+            } else {
+                r = convertFraction(v, radixsource, radixtarget);
+            }
+            System.out.println(r);
         }
-        else {
-            r = convertFraction(v,radixsource,radixtarget);
+        catch (Exception a){
+            System.out.println("error");
         }
-        System.out.println(r);
     }
 
-    private static String convertFraction(String v, int radixsource, int radixtarget) {
+    private static String convertFraction(String v, int radixsource, int radixtarget) throws Exception {
         String[] n = v.split("\\.");
         String e = n[0];
         String frac = n[1];
-        String  es = convert(e,radixsource,radixtarget);
 
-        double decimal = convertToDecimal(n[1],radixsource);
-        String fs = convertToRadix(decimal,radixtarget);
+            String es = convert(e, radixsource, radixtarget);
 
-        return es+fs;
+            double decimal = convertToDecimal(n[1], radixsource);
+            String fs = convertToRadix(decimal, radixtarget);
+
+            return es + fs;
+
+
 
     }
 
 
-    private static String  convertToRadix(double d, int radix) {
+    private static String  convertToRadix(double d, int radix) throws Exception{
         int n = 0;
         String result = ".";
         while ( n < 5 && d > 0 ){
             double x = d * radix;
            int digit =  (int) x;
+           if (digit > radix){
+               throw new Exception();
+           }
             result  += getSymbol(digit);
             d = x - (int) x ;
            n++;
@@ -101,7 +114,7 @@ public class Main {
         }
     }
 
-    private static double convertToDecimal(String s, double radixsource) {
+    private static double convertToDecimal(String s, double radixsource) throws Exception {
         double r = 0;
         if (radixsource == 10){
             return Double.parseDouble("."+s);
@@ -110,6 +123,10 @@ public class Main {
         double power = 1 / radixsource;
         while(s.length() >0){
             String digit = s.substring(0,1);
+            if (digit.codePointAt(0)  - 'a' + 10 > radixsource ){
+                throw new Exception();
+            }
+
             int x = getValue(digit);
             r  +=   x * power;
             power *= 1 / radixsource;
