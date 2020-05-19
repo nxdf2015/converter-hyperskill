@@ -55,24 +55,29 @@ public class Main {
         int radixsource = scanner.nextInt();
         String v = scanner.next();
         int radixtarget = scanner.nextInt();
+        String r;
         if (v.indexOf('.') == -1 ){
-
-            System.out.println(convert(v,radixsource,radixtarget));
+            r = convert(v,radixsource,radixtarget);
         }
         else {
-            String[] n = v.split("\\.");
-            String e = n[0];
-            String frac = n[1];
-            String  es = convert(e,radixsource,radixtarget);
-
-            double decimal = convertToDecimal(n[1],radixsource);
-            String fs = convertToRadix(decimal,radixtarget);
-
-            System.out.println(es+fs);
-
+            r = convertFraction(v,radixsource,radixtarget);
         }
+        System.out.println(r);
+    }
+
+    private static String convertFraction(String v, int radixsource, int radixtarget) {
+        String[] n = v.split("\\.");
+        String e = n[0];
+        String frac = n[1];
+        String  es = convert(e,radixsource,radixtarget);
+
+        double decimal = convertToDecimal(n[1],radixsource);
+        String fs = convertToRadix(decimal,radixtarget);
+
+        return es+fs;
 
     }
+
 
     private static String  convertToRadix(double d, int radix) {
         int n = 0;
